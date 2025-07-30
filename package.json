@@ -1,0 +1,16 @@
+{
+  "name": "project-backend",
+  "version": "1.0.0",
+  "description": "learning backend to the core",
+  "license": "ISC",
+  "author": "rounak gupta",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev" : "nodemon" 
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2"
+  }
+}
