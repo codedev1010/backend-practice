@@ -28,14 +28,26 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // getting the local file path of avatar and cover image using multer 
 
-    const avatarLocalPath = req.files?.avatar[0]?.path;
+    let avatarLocalPath;
+    if (
+        req.files &&
+        Array.isArray(req.files.avatar) &&
+        req.files.avatar.length > 0
+    ) {
+        avatarLocalPath = req.files.avatar[0].path;
+    }
     let coverImageLocalPath;
-    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
-        coverImageLocalPath = req.files.coverImage[0].path
+    if (
+        req.files &&
+        Array.isArray(req.files.coverImage) &&
+        req.files.coverImage.length > 0
+    ) {
+        coverImageLocalPath = req.files.coverImage[0].path;
     }
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required");
     }
+    console.log(avatarLocalPath);
 
     // uploading the avatar and imagecover on cloudinary
 
@@ -53,7 +65,7 @@ const registerUser = asyncHandler(async (req, res) => {
         coverImage: coverImage.url || "",
         email,
         password,
-        username: username.toLowercase(),
+        username: username.toLowerCase(),
     })
     // sendind a response back to the request but not including the password and the refresh token
     const createdUser = await User.findById(user._id).select(
